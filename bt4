@@ -61,7 +61,7 @@ public class Line {
     	 return Math.sqrt(xD*xD + yD*yD);
     }
     public String toString() {
-    	return getLength() +","+"("+start.getX()+","+end.getX()+")";
+    	return getLength() +","+"("+start.getX()+","+start.getY()+")"+","+"("+end.getX()+","+ end.getY()+")";
     }
 
 }
