@@ -1,0 +1,105 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class testHCN {
+	static Scanner sc = new Scanner(System.in);
+	static ArrayList<HinhChuNhat> hcn = new ArrayList<HinhChuNhat>();
+	
+	static HinhChuNhat AddHcn() {
+		sc.nextLine();
+		System.out.println("Nhap chieu dai:");
+		double dai = sc.nextDouble();
+		System.out.println("Nhap chieu rong:");
+		double rong = sc.nextDouble();
+		HinhChuNhat h = new HinhChuNhat(dai,rong);
+		return h;
+	}
+
+	static void AddHcnList(int n) {
+		for(int i=0; i<n; i++) {
+			System.out.println("hinh chu nhat thu "+(i+1));
+			
+			hcn.add(AddHcn());
+		}
+	}
+	
+	static void PrintfHCN() {
+		for(HinhChuNhat h:hcn) {
+			System.out.println(h.toString());
+		}
+	}
+	
+	static void maxDT() {
+		HinhChuNhat max = hcn.get(0);
+		for(HinhChuNhat m:hcn) {
+			if(max.getDT()<m.getDT()) {
+				max = m;
+			}
+		}
+		System.out.println("HCN co DT lon nhat"+max.toString());
+	}
+	
+	
+	public static void main(String[] args) {
+		HinhChuNhat h = new HinhChuNhat();
+		System.out.println("Nhap so luong Hinh chu nhat:");
+		int n = sc.nextInt();
+		AddHcnList(n);
+		PrintfHCN();
+		maxDT();
+	}
+	
+}
+
+
+
+
+
+
+public class HinhChuNhat {
+	private double dai;
+	private double rong;
+	
+	public HinhChuNhat() {
+		this.dai = 1;
+		this.rong =1;
+	}
+
+	public HinhChuNhat(double dai, double rong) {
+		this.dai = dai;
+		this.rong = rong;
+	}
+	
+	
+	public double getDai() {
+		return dai;
+	}
+
+	public void setDai(double dai) {
+		this.dai = dai;
+	}
+
+	public double getRong() {
+		return rong;
+	}
+
+	public void setRong(double rong) {
+		this.rong = rong;
+	}
+	
+public double getCV() {
+		return (this.dai+this.rong)*2;
+	}
+
+	public double getDT() {
+		return this.dai*this.rong;
+	}
+
+	@Override
+	public String toString() {
+		return "HinhChuNhat [dai=" + dai + ", rong=" + rong +"chu Vi="+getCV()+", Dien tich="+getDT()+ "]";
+	}
+
+	
+
+}
+
