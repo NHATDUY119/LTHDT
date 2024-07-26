@@ -1,102 +1,100 @@
-
-Lớp Person:
-public class Person {
-	private String name;
-	private String address; //dia chi
-	
-	public Person(String name, String add) {
-		this.name = name;
-		this.address = add;
-	}
-	
-	public String getName() { return this.name; }
-	public String getAddress() { return this.address; }
-	public void setAddress(String add) { this.address = add; }
-	public String toString() {
-		return "Person[name="+ this.name+",address="+this.address+"]";
-	}
-}
-
-Lớp Student:
-public class Student extends Person {
-	private String program;
-	private int year;
-	private double fee;
-	public Student(String name, String add, String program, int year, double fee) {
-		//khoi tao person
-		super(name, add);
-		this.program = program;
-		this.year = year;
-		this.fee = fee;
-	}
-	//getters
-	public String getProgram() { return this.program; };
-	public int getYear() { return this.year; };
-	public double getFee() { return this.fee; }
-	//setters
-	public void setProgram(String prog) { this.program = prog; };
-	public void setYear(int y) { this.year = y; };
-	public void setFee(double fee) { this.fee = fee; };
-	//tai dinh nghia/nap chong/cai chong toString
-	public String toString() {
-		return "Student["+super.toString()+",program="+this.program+",year="+this.year+",fee="+this.fee+"]";
-	}
-	
-}
-
-
-Lớp TestStudent: Cho phép nhập vào danh sách sinh viên, in danh sách sinh viên vừa nhập
-
-
-import java.util.Scanner;
 import java.util.ArrayList;
-public class TestStudent {
-	//khai bao danh sach sinh vien
-	static ArrayList<Student> st_list = new ArrayList<Student>();
-	static Scanner myScanner = new Scanner(System.in); //***
-	
-	//ham nhap 1 sinh vien - student
-	
-	static Student addStudent() {
-		myScanner.nextLine(); //xoa bo dem
-		System.out.println("Nhap ho ten");
-		String name = myScanner.nextLine();
-		
-		System.out.println("Nhap dia chi");
-		String address = myScanner.nextLine();
-		
-		System.out.println("Nhap nganh hoc");
-		String program = myScanner.nextLine();
-		
-		System.out.println("Nhap nam nhap hoc");
-		int year = myScanner.nextInt();
-		
-		System.out.println("Nhap hoc phi");
-		double fee = myScanner.nextDouble();
-		
-		Student s = new Student(name,address, program, year, fee);
-		return s;
-	}
-	
-	static void addStudentList(int n) {
-		for(int i =0; i<n; i++) {
-			System.out.println("Nhap sinh vien thu "+i);
-			st_list.add(addStudent());
-		}
-	}
-	
-	static void printStudentList() {
-		for(Student st:st_list ) { //duyet danh sach
-			System.out.println(st.toString());
-		}
-	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Nhap so luong sinh vien (student): ");
-		int n = myScanner.nextInt();		
-		addStudentList(n);
-		printStudentList();
-//		Student st1= new Student("Nguyen Van Hai", "Tra Vinh", "IT", 2023, 1000);
-//		System.out.println(st1.toString());
-	}
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+abstract class Nguoi {
+    protected String hoten;
+    protected int namsinh;
+
+    public Nguoi() {
+        this.hoten = null;
+        this.namsinh = 1900;
+    }
+
+    public Nguoi(String hoten, int namsinh) {
+        this.hoten = hoten;
+        this.namsinh = namsinh;
+    }
+
+    public abstract double getLuong();
+
+    public void Nhap() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhap ho ten: ");
+        hoten = scanner.nextLine();
+        System.out.print("Nhap nam sinh: ");
+        namsinh = scanner.nextInt();
+    }
+
+    public void Xuat() {
+        System.out.println("Ho ten: " + hoten);
+        System.out.println("Nam sinh: " + namsinh);
+    }
+}
+
+class NhanVien extends Nguoi {
+    private int ngaycong;
+
+    public NhanVien() {
+        super();
+        this.ngaycong = 0;
+    }
+
+    public NhanVien(String hoten, int namsinh, int ngaycong) {
+        super(hoten, namsinh);
+        this.ngaycong = ngaycong;
+    }
+
+    public double getLuong() {
+        double luong = 10 * ngaycong;
+        if (ngaycong > 22) {
+            luong += (ngaycong - 22) * 10;
+        }
+        return luong;
+    }
+
+    public void Nhap() {
+        super.Nhap();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhap so ngay cong: ");
+        ngaycong = scanner.nextInt();
+    }
+
+    public void Xuat() {
+        super.Xuat();
+        System.out.println("So ngay cong: " + ngaycong);
+        System.out.println("Luong: " + getLuong());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<NhanVien> danhSachNhanVien = new ArrayList<>();
+
+        System.out.print("Nhap so luong nhan vien: ");
+        int soLuongNhanVien = scanner.nextInt();
+
+        for (int i = 0; i < soLuongNhanVien; i++) {
+            System.out.println("Nhap thong tin nhan vien thu " + (i + 1) + ":");
+            NhanVien nv = new NhanVien();
+            nv.Nhap();
+            danhSachNhanVien.add(nv);
+        }
+
+        // Sap xep danh sach nhan vien theo luong
+        Collections.sort(danhSachNhanVien, new Comparator<NhanVien>() {
+            public int compare(NhanVien nv1, NhanVien nv2) {
+                return Double.compare(nv2.getLuong(), nv1.getLuong());
+            }
+        });
+
+        // Xuat danh sach nhan vien
+        System.out.println("Danh sach nhan vien da sap xep theo luong:");
+        for (NhanVien nv : danhSachNhanVien) {
+            nv.Xuat();
+            System.out.println();
+        }
+    }
 }
