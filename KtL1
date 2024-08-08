@@ -1,0 +1,156 @@
+[[[[[[[[[[[[[KtL1C1}}}}}}}}}}}
+
+public class HinhChuNhat {
+	private int dai;
+	private int rong;
+	
+	public HinhChuNhat() {
+		this.dai = 1;
+		this.rong = 1;
+	}
+	public HinhChuNhat(int dai, int rong) {
+		this.dai = dai;
+		this.rong = rong;
+	}
+	public int getDai() {
+		return dai;
+	}
+	public void setDai(int dai) {
+		this.dai = dai;
+	}
+	public int getRong() {
+		return rong;
+	}
+	public void setRong(int rong) {
+		this.rong = rong;
+	}
+	
+	public String laVuong() {
+		if(this.dai == this.rong) {
+			return "la hinh vuong";
+		}else {
+			return "khong la hinh vuong";
+		}
+	}
+	public String ssCheo(HinhChuNhat hcn) {
+		double h1 = Math.sqrt(Math.pow(this.dai, 2)+Math.pow(this.rong, 2));
+		double h2 = Math.sqrt(Math.pow(hcn.getDai(), 2)+Math.pow(hcn.getRong(), 2));
+		if(h1>h2) {
+			return "h1 lon hon h2";
+		}else {
+			if(h1==h2) {
+				return "h1 bang h2";
+			}else
+				return "h1 nho hon h2";
+		}
+		
+	}
+
+}
+///////////////////
+
+public class testHCN {
+	public static void main(String[] args) {
+		HinhChuNhat h = new HinhChuNhat();
+		System.out.println(h.laVuong());
+		
+		HinhChuNhat h2 = new HinhChuNhat(7,7);
+		HinhChuNhat h3 = new HinhChuNhat(7,7);
+		System.out.println(h2.ssCheo(h3));
+		
+		HinhChuNhat h4 = new HinhChuNhat(9,8);
+		System.out.println(h4.laVuong());
+	}
+
+}
+
+
+[[[[[[[[[[[[[[[[[[[[[[[[KtL1C2]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+
+public class Porson {
+	private String name;
+	private String birthday;
+	
+	public Porson() {
+		this.name = "Duy";
+		this.birthday = "2005";
+	}
+	public Porson(String name, String birthday) {
+		this.name = name;
+		this.birthday = birthday;
+	}
+	public String getName() {
+		return this.name;
+	}
+	public String toString() {
+		return "name="+this.name+", birthday="+this.birthday;
+	}
+
+}
+//////////////
+
+public class Manager extends Employee {
+	private Employee assistant;
+	
+	public Manager() {
+		//this.assistant = 0;
+	}
+	public Manager(String name, String birthday, double salary, Employee ass) {
+		super(name, birthday, salary);
+		this.assistant=ass;
+	}
+	public void setAssistant(Employee ass) {
+		this.assistant=ass;
+	}
+	public String toString() {
+		return super.toString()+"assistant="+this.assistant;
+	}
+		
+}
+////////////////
+
+public class Employee extends Porson {
+	private double salary;
+	
+	public Employee() {
+		super();
+		this.salary = 100;
+	}
+	public Employee(double salary) {
+		super();
+		this.salary = salary;
+	}
+	public Employee(String name, String birthday, double salary) {
+		super(name, birthday);
+		this.salary = salary;
+	}
+	public double getSalary() {
+		return this.salary;
+	}
+	public String toString() {
+		return super.toString()+", salary="+this.salary;
+	}
+
+}
+///////////
+
+public class testPorson {
+
+	public static void main(String[] args) {
+		Porson p = new Porson();
+		System.out.println(p.toString());
+		Employee e = new Employee("Anh Duy", "1109", 300);
+		System.out.println(e.toString());
+		Employee e1 = new Employee(4);
+	// dang errol	
+		Manager ma = new Manager();
+		
+		ma.setAssistant(e1);
+		Manager m = new Manager("Nhat Duy", "11", 700, e1 );
+		 System.out.println(m.toString());
+		 
+	}
+
+}
+
